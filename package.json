@@ -1,0 +1,38 @@
+{
+  "name": "traceglass",
+  "version": "0.1.0",
+  "description": "Zero-backend, local-only viewer for AI-agent execution traces. Renders MCP JSON-RPC session logs and generic span exports as an interactive, browser-network-tab-style waterfall, output as a single standalone HTML file.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "traceglass": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "dev": "tsx src/cli.ts"
+  },
+  "keywords": [
+    "mcp",
+    "tracing",
+    "observability",
+    "waterfall",
+    "agent",
+    "json-rpc"
+  ],
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.5"
+  }
+}
