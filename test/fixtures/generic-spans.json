@@ -1,0 +1,56 @@
+[
+  {
+    "id": "span-1",
+    "name": "agent.turn",
+    "startTime": 1739500800000,
+    "endTime": 1739500802350,
+    "parentId": null,
+    "status": "ok",
+    "metadata": { "input": "Summarize last week's deploys and file any follow-ups." }
+  },
+  {
+    "id": "span-2",
+    "name": "llm.call",
+    "startTime": "2025-02-14T02:40:00.050Z",
+    "endTime": "2025-02-14T02:40:01.200Z",
+    "parentId": "span-1",
+    "status": "ok",
+    "metadata": { "model": "claude", "promptTokens": 812, "completionTokens": 96 }
+  },
+  {
+    "id": "span-3",
+    "name": "tool.call:search_deploys",
+    "startTime": 1739500801250,
+    "endTime": 1739500801900,
+    "parentId": "span-1",
+    "status": "ok",
+    "metadata": { "query": "deploys last 7 days" }
+  },
+  {
+    "id": "span-4",
+    "name": "http.request",
+    "startTime": 1739500801300,
+    "endTime": 1739500801600,
+    "parentId": "span-3",
+    "status": "ok",
+    "metadata": { "method": "GET", "url": "https://deploys.internal/api/recent" }
+  },
+  {
+    "id": "span-5",
+    "name": "db.query",
+    "startTime": 1739500801620,
+    "endTime": 1739500801880,
+    "parentId": "span-3",
+    "status": "error",
+    "metadata": { "sql": "SELECT * FROM deploy_events WHERE ts > now() - interval '7 days'", "error": "connection reset" }
+  },
+  {
+    "id": "span-6",
+    "name": "tool.call:file_followup",
+    "startTime": 1739500801950,
+    "endTime": 1739500802300,
+    "parentId": "span-1",
+    "status": "ok",
+    "metadata": { "ticket": "OPS-1044" }
+  }
+]

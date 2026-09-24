@@ -1,0 +1,101 @@
+[
+  {
+    "timestamp": "2026-02-14T10:00:00.000Z",
+    "parentId": null,
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/call",
+    "params": { "name": "run_pipeline", "arguments": { "jobId": "job-42" } }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.010Z",
+    "parentId": 1,
+    "jsonrpc": "2.0",
+    "id": 2,
+    "method": "tools/call",
+    "params": { "name": "fetch_data", "arguments": { "source": "s3://bucket/input.csv" } }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.130Z",
+    "jsonrpc": "2.0",
+    "id": 2,
+    "result": { "content": [{ "type": "text", "text": "1024 rows fetched" }] }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.135Z",
+    "parentId": 1,
+    "jsonrpc": "2.0",
+    "id": 3,
+    "method": "tools/call",
+    "params": { "name": "transform_data", "arguments": { "op": "normalize" } }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.335Z",
+    "jsonrpc": "2.0",
+    "id": 3,
+    "result": { "content": [{ "type": "text", "text": "1024 rows normalized" }] }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.340Z",
+    "parentId": 1,
+    "jsonrpc": "2.0",
+    "id": 4,
+    "method": "tools/call",
+    "params": { "name": "store_result", "arguments": { "table": "job_42_results" } }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.345Z",
+    "parentId": 4,
+    "jsonrpc": "2.0",
+    "id": 5,
+    "method": "tools/call",
+    "params": { "name": "write_to_cache", "arguments": { "key": "job-42" } }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.400Z",
+    "jsonrpc": "2.0",
+    "id": 5,
+    "result": { "content": [{ "type": "text", "text": "cached" }] }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.410Z",
+    "jsonrpc": "2.0",
+    "id": 4,
+    "result": { "content": [{ "type": "text", "text": "stored to job_42_results" }] }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.415Z",
+    "parentId": 1,
+    "jsonrpc": "2.0",
+    "id": 6,
+    "method": "tools/call",
+    "params": { "name": "validate_schema", "arguments": { "table": "job_42_results" } }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.460Z",
+    "jsonrpc": "2.0",
+    "id": 6,
+    "error": { "code": -32001, "message": "Schema validation failed: missing column 'checksum'" }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.465Z",
+    "parentId": 1,
+    "jsonrpc": "2.0",
+    "method": "notifications/progress",
+    "params": { "percent": 80, "message": "post-processing" }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.470Z",
+    "parentId": 1,
+    "jsonrpc": "2.0",
+    "id": 7,
+    "method": "tools/call",
+    "params": { "name": "slow_operation", "arguments": { "table": "job_42_results" } }
+  },
+  {
+    "timestamp": "2026-02-14T10:00:00.700Z",
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": { "content": [{ "type": "text", "text": "pipeline complete for job-42" }] }
+  }
+]
