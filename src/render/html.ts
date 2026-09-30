@@ -141,7 +141,6 @@ main {
   border-bottom: 1px solid var(--border);
   margin-left: 260px;
   margin-right: 70px;
-  position: relative;
   z-index: 1;
 }
 .ruler-tick {
