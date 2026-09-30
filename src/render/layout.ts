@@ -79,8 +79,12 @@ export function computeLayout(spans: Span[]): Layout {
     childrenOf.set(parentKey, bucket);
   }
 
-  const traceStart = Math.min(...spans.map((s) => s.startTime));
-  const traceEnd = Math.max(...spans.map((s) => s.endTime));
+  let traceStart = spans[0].startTime;
+  let traceEnd = spans[0].endTime;
+  for (const s of spans) {
+    if (s.startTime < traceStart) traceStart = s.startTime;
+    if (s.endTime > traceEnd) traceEnd = s.endTime;
+  }
   const totalDuration = Math.max(1, traceEnd - traceStart);
 
   const nodes: LayoutNode[] = [];

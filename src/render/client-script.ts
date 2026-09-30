@@ -22,11 +22,14 @@ export const CLIENT_SCRIPT = `
   function descendantIds(id) {
     var out = [];
     var queue = (childrenOf[id] || []).slice();
-    while (queue.length) {
-      var next = queue.shift();
+    var head = 0;
+    while (head < queue.length) {
+      var next = queue[head++];
       out.push(next);
       var kids = childrenOf[next];
-      if (kids) queue = queue.concat(kids);
+      if (kids) {
+        for (var i = 0; i < kids.length; i++) queue.push(kids[i]);
+      }
     }
     return out;
   }
